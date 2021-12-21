@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperPay.Mobile", "HyperPay.Mobile\HyperPay.Mobile.csproj", "{F718FDA3-7471-435E-9B34-91DBB22B0442}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperPay.Shared", "HyperPay.Shared\HyperPay.Shared.csproj", "{7093FC91-90A7-4B6D-8D15-B4F5B149DA0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperPay.Service", "HyperPay.Service\HyperPay.Service.csproj", "{21393551-10A9-420C-8551-BAC12F50C886}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F718FDA3-7471-435E-9B34-91DBB22B0442}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F718FDA3-7471-435E-9B34-91DBB22B0442}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F718FDA3-7471-435E-9B34-91DBB22B0442}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F718FDA3-7471-435E-9B34-91DBB22B0442}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7093FC91-90A7-4B6D-8D15-B4F5B149DA0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7093FC91-90A7-4B6D-8D15-B4F5B149DA0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7093FC91-90A7-4B6D-8D15-B4F5B149DA0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7093FC91-90A7-4B6D-8D15-B4F5B149DA0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21393551-10A9-420C-8551-BAC12F50C886}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21393551-10A9-420C-8551-BAC12F50C886}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21393551-10A9-420C-8551-BAC12F50C886}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21393551-10A9-420C-8551-BAC12F50C886}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5C13DA4F-69C9-43AA-A4D8-27A6B05556BC}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://devops.saptco.com.sa/integration
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = HyperPay.Mobile\\HyperPay.Mobile.csproj
+		SccProjectName1 = HyperPay.Mobile
+		SccLocalPath1 = HyperPay.Mobile
+		SccProjectUniqueName2 = HyperPay.Service\\HyperPay.Service.csproj
+		SccProjectName2 = HyperPay.Service
+		SccLocalPath2 = HyperPay.Service
+		SccProjectUniqueName3 = HyperPay.Shared\\HyperPay.Shared.csproj
+		SccProjectName3 = HyperPay.Shared
+		SccLocalPath3 = HyperPay.Shared
+	EndGlobalSection
+EndGlobal

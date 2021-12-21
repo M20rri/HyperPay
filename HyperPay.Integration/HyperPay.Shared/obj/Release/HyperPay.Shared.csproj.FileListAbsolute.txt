@@ -1,0 +1,17 @@
+E:\M2ri\HyperPay\HyperPay.Shared\bin\Release\HyperPay.Shared.dll
+E:\M2ri\HyperPay\HyperPay.Shared\bin\Release\HyperPay.Shared.pdb
+E:\M2ri\HyperPay\HyperPay.Shared\obj\Release\HyperPay.Shared.csproj.CoreCompileInputs.cache
+E:\M2ri\HyperPay\HyperPay.Shared\obj\Release\HyperPay.Shared.dll
+E:\M2ri\HyperPay\HyperPay.Shared\obj\Release\HyperPay.Shared.pdb
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Shared\bin\Release\HyperPay.Shared.dll
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Shared\bin\Release\HyperPay.Shared.pdb
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Shared\obj\Release\HyperPay.Shared.csprojAssemblyReference.cache
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Shared\obj\Release\HyperPay.Shared.csproj.CoreCompileInputs.cache
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Shared\obj\Release\HyperPay.Shared.dll
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Shared\obj\Release\HyperPay.Shared.pdb
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Shared\bin\Release\HyperPay.Shared.dll.config
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Shared\bin\Release\EntityFramework.dll
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Shared\bin\Release\EntityFramework.SqlServer.dll
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Shared\bin\Release\EntityFramework.xml
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Shared\bin\Release\EntityFramework.SqlServer.xml
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Shared\obj\Release\HyperPay.Shared.csproj.CopyComplete

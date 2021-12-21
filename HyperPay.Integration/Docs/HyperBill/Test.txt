@@ -1,0 +1,11 @@
+
+Login URL: http://hyperbill.sandbox.hyperpay.com
+Username:mubarakaa@saptco.com.sa 
+Password: 123456
+
+
+================================================================
+
+Docs:
+https://hyperbill.docs.apiary.io
+

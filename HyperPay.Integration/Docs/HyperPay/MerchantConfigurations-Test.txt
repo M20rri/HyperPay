@@ -1,0 +1,56 @@
+Kindly find the credentials for the test server below:
+
+Links used in the integration in the code: https://test.oppwa.com/
+
+Access Token: OGFjN2E0Yzc3OWMwZmNmMTAxNzljMjk1MDVmNzA2Yjl8WE55VzNGWnNOWQ==
+Entity ID (VISA,MASTER): 8ac7a4c779c0fcf10179c295387b06bf
+Entity ID (MADA): 8ac7a4c779ebaa570179ed93e162079a
+Currency: SAR only
+PaymentType: DB
+
+Payment Methods: VISA,MASTER,MADA
+
+Also you need to add the following required parameters in the POST request (step number.1 in the guide):
+(Without passing them with values will cause a rejection for the transactions on the live by the bank).
+- testMode=EXTERNAL (For Mada testMode=INTERNAL)
+- merchantTransactionId="your unique ID in your database"
+- customer.email = The user's email.
+- billing.street1= street address of customer          
+- billing.city= should be city of customer          
+- billing.state= should be state of customer          
+- billing.country= should be country of customer (Alpha-2 codes with Format A2[A-Z]{2})
+- billing.postcode
+- customer.givenName
+- customer.surname
+
+*The reference for all the Open Payment Platform parameters (https://hyperpay.docs.oppwa.com/reference/parameters).
+
+==================================================================================
+
+Merchant Area: 
+(Dashboard to check your Test transactions) 
+Link: https://gate2play.test.ctpe.info/Saptco%202/
+User:mubarakaa@saptco.com.sa
+Password: nH99kWyf 
+
+==================================================================================
+
+Testing Cards:
+4111111111111111 05/21 cvv2 123  (Success)
+5204730000002514 05/22 cvv2 251  (Fail)
+
+Mada:
+5297412484442387 10/22 cvv2 966
+
+==================================================================================
+
+
+You will be using COPYandPAY technology, all related data can be accessed using the link below:
+https://hyperpay.docs.oppwa.com/integration-guide
+
+Please find the download link for the latest SDK v2.65 for iOS and Android
+http://hyperpay-2020.quickconnect.to/d/f/604208655675472055
+
+Please find Mada Branding Guidelines ecommerce
+http://hyperpay-2020.quickconnect.to/d/f/574119600881448922
+

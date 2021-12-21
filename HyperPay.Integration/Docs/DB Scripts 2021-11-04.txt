@@ -1,0 +1,1485 @@
+USE [HyperPay]
+GO
+/****** Object:  Table [dbo].[__MigrationHistory]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[__MigrationHistory](
+	[MigrationId] [nvarchar](150) NOT NULL,
+	[ContextKey] [nvarchar](300) NOT NULL,
+	[Model] [varbinary](max) NOT NULL,
+	[ProductVersion] [nvarchar](32) NOT NULL,
+ CONSTRAINT [PK_dbo.__MigrationHistory] PRIMARY KEY CLUSTERED 
+(
+	[MigrationId] ASC,
+	[ContextKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Checkout]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Checkout](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[MerchantTransactionId] [bigint] NOT NULL,
+	[Amount] [decimal](16, 2) NOT NULL,
+	[Currency] [nvarchar](50) NOT NULL,
+	[paymentType] [nvarchar](50) NOT NULL,
+	[PaymentMethod] [nvarchar](50) NOT NULL,
+	[EntityId] [nvarchar](200) NOT NULL,
+	[CustomerEmail] [nvarchar](200) NULL,
+	[CustomerGivenName] [nvarchar](200) NULL,
+	[CustomerSurname] [nvarchar](200) NULL,
+	[BillingPostcode] [nvarchar](50) NULL,
+	[BillingStreet] [nvarchar](max) NULL,
+	[BillingCity] [nvarchar](200) NULL,
+	[BillingState] [nvarchar](200) NULL,
+	[BillingCountry] [nvarchar](200) NULL,
+	[phone] [nvarchar](50) NULL,
+	[lang] [nvarchar](20) NULL,
+	[CustomParameter1] [nvarchar](max) NULL,
+	[CustomParameter2] [nvarchar](max) NULL,
+	[CreationDate] [datetime] NOT NULL,
+	[UserId] [int] NOT NULL,
+	[SystemId] [int] NULL,
+	[HyperPayRawResponse] [nvarchar](max) NULL,
+	[HyperPay_ResultCode] [nvarchar](max) NULL,
+	[HyperPay_ResultDescription] [nvarchar](max) NULL,
+	[HyperPay_ndc] [nvarchar](max) NULL,
+	[HyperPay_CheckoutId] [nvarchar](max) NULL,
+	[HyperPay_TimeStamp] [nvarchar](200) NULL,
+	[UpdatedDate] [datetime] NULL,
+ CONSTRAINT [PK_Checkout] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CheckoutPaymentDelivery]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CheckoutPaymentDelivery](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[CheckoutId] [nvarchar](max) NOT NULL,
+	[CreationDate] [datetime] NOT NULL,
+	[OwnerSystem_DeliveryStatus] [int] NOT NULL,
+	[OwnerSystem_RetryCount] [int] NULL,
+	[OwnerSystem_LastRetryAt] [datetime] NULL,
+	[OwnerSystem_DeliveredAt] [datetime] NULL,
+	[OwnerSystem_Request] [nvarchar](max) NULL,
+	[OwnerSystem_Response] [nvarchar](max) NULL,
+	[OwnerChannel_DeliveryStatus] [int] NOT NULL,
+	[OwnerChannel_RetryCount] [int] NULL,
+	[OwnerChannel_LastRetryAt] [datetime] NULL,
+	[OwnerChannel_DeliveredAt] [datetime] NULL,
+	[OwnerChannel_Request] [nvarchar](max) NULL,
+	[OwnerChannel_Response] [nvarchar](max) NULL,
+ CONSTRAINT [PK_PaymentDelivery] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Configuration]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Configuration](
+	[Id] [int] NOT NULL,
+	[Code] [nvarchar](max) NULL,
+	[Value] [nvarchar](max) NULL,
+	[Description] [nvarchar](max) NULL,
+	[CreationDate] [datetime] NULL,
+ CONSTRAINT [PK_Configuration] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[LK_PmtDeliveryStatus]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LK_PmtDeliveryStatus](
+	[Id] [int] NOT NULL,
+	[Code] [nvarchar](100) NULL,
+	[DescriptionEN] [nvarchar](max) NULL,
+	[DescriptionAR] [nvarchar](max) NULL,
+ CONSTRAINT [PK_LK_Status] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[RequestResponseLog]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RequestResponseLog](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserHostName] [nvarchar](200) NULL,
+	[UserHostAddress] [nvarchar](50) NULL,
+	[Origin] [nvarchar](max) NULL,
+	[RequestUri] [nvarchar](max) NULL,
+	[PathAndQuery] [nvarchar](max) NULL,
+	[MethodType] [varchar](10) NULL,
+	[Headers] [nvarchar](max) NULL,
+	[XForwardedFor] [nvarchar](max) NULL,
+	[RequestBody] [nvarchar](max) NULL,
+	[ResponseBody] [nvarchar](max) NULL,
+	[Status] [nvarchar](50) NULL,
+	[CreationDate] [datetime] NULL,
+	[UserId] [int] NULL,
+ CONSTRAINT [PK_RequestResponseLog] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Route]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Route](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Prefix] [nvarchar](100) NULL,
+ CONSTRAINT [PK_Route] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SimpleInvoice]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SimpleInvoice](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[HyperPay_merchant_invoice_number] [bigint] NOT NULL,
+	[OwnerSystem_merchant_invoice_number] [bigint] NOT NULL,
+	[amount] [decimal](16, 2) NULL,
+	[currency] [nvarchar](20) NULL,
+	[payment_type] [nvarchar](20) NULL,
+	[name] [nvarchar](200) NULL,
+	[email] [nvarchar](200) NULL,
+	[phone] [nvarchar](50) NULL,
+	[lang] [nvarchar](20) NULL,
+	[expiration_date] [nvarchar](100) NULL,
+	[CustomParameter1] [nvarchar](max) NULL,
+	[CustomParameter2] [nvarchar](max) NULL,
+	[RequestToHyperPay] [nvarchar](max) NULL,
+	[CreationDate] [datetime] NULL,
+	[UserId] [int] NULL,
+	[SystemId] [int] NULL,
+	[ResponseFromHyperPay] [nvarchar](max) NULL,
+	[UpdatedDate] [datetime] NULL,
+ CONSTRAINT [PK_HyperBill.SimpleInvoice] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SimpleInvoicePaymentDelivery]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SimpleInvoicePaymentDelivery](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[HyperPay_merchant_invoice_number] [bigint] NOT NULL,
+	[CreationDate] [datetime] NOT NULL,
+	[OwnerSystem_DeliveryStatus] [int] NOT NULL,
+	[OwnerSystem_RetryCount] [int] NULL,
+	[OwnerSystem_LastRetryAt] [datetime] NULL,
+	[OwnerSystem_DeliveredAt] [datetime] NULL,
+	[OwnerSystem_Request] [nvarchar](max) NULL,
+	[OwnerSystem_Response] [nvarchar](max) NULL,
+	[OwnerChannel_DeliveryStatus] [int] NOT NULL,
+	[OwnerChannel_RetryCount] [int] NULL,
+	[OwnerChannel_LastRetryAt] [datetime] NULL,
+	[OwnerChannel_DeliveredAt] [datetime] NULL,
+	[OwnerChannel_Request] [nvarchar](max) NULL,
+	[OwnerChannel_Response] [nvarchar](max) NULL,
+ CONSTRAINT [PK_SimpleInvoicePaymentDelivery] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[System]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[System](
+	[Id] [int] NOT NULL,
+	[NameEN] [nvarchar](200) NOT NULL,
+	[NameAR] [nvarchar](200) NULL,
+	[Enabled] [bit] NOT NULL,
+	[CreationDate] [datetime] NULL,
+	[PmtNotificationURL] [nvarchar](max) NULL,
+	[PmtNotificationUserName] [nvarchar](255) NULL,
+	[PmtNotificationPassword] [nvarchar](max) NULL,
+	[Remarks] [nvarchar](max) NULL,
+ CONSTRAINT [PK_System] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[User]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[User](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Username] [nvarchar](50) NULL,
+	[Password] [nvarchar](50) NULL,
+	[IsActive] [bit] NOT NULL,
+	[SystemId] [int] NULL,
+	[CreationDate] [datetime] NULL,
+	[DailyCheckoutAllowedCount] [int] NULL,
+	[DailyCheckoutAllowedAmount] [decimal](16, 2) NULL,
+	[DailyInvoicesAllowedCount] [int] NULL,
+	[DailyInvoicesAllowedAmount] [decimal](16, 2) NULL,
+	[InvoiceExpirationInMinutes] [int] NULL,
+	[HookNotificationURL] [nvarchar](max) NULL,
+	[HookNotificationUserName] [nvarchar](max) NULL,
+	[HookNotificationPassword] [nvarchar](max) NULL,
+	[HookNotificationTicketsUrl] [nvarchar](max) NULL,
+	[Remarks] [nvarchar](max) NULL,
+ CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UserRoute]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserRoute](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [int] NULL,
+	[RouteId] [int] NULL,
+ CONSTRAINT [PK_UserRoute] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Webhook]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Webhook](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[RawData] [nvarchar](max) NULL,
+	[ndc] [nvarchar](max) NULL,
+	[MerchantTransactionId] [nvarchar](max) NULL,
+	[MerchantInvoiceId] [nvarchar](max) NULL,
+	[merchant_invoice_number] [nvarchar](max) NULL,
+	[Type] [nvarchar](max) NULL,
+	[PaymentType] [nvarchar](max) NULL,
+	[PaymentBrand] [nvarchar](max) NULL,
+	[Amount] [nvarchar](max) NULL,
+	[Currency] [nvarchar](max) NULL,
+	[Result_Code] [nvarchar](max) NULL,
+	[Result_Description] [nvarchar](max) NULL,
+	[Card_bin] [nvarchar](max) NULL,
+	[Card_last4Digits] [nvarchar](max) NULL,
+	[Card_holder] [nvarchar](max) NULL,
+	[Card_expiryMonth] [nvarchar](max) NULL,
+	[Card_expiryYear] [nvarchar](max) NULL,
+	[Customer_givenName] [nvarchar](max) NULL,
+	[Customer_surname] [nvarchar](max) NULL,
+	[Customer_email] [nvarchar](max) NULL,
+	[Customer_ip] [nvarchar](max) NULL,
+	[Billing_street1] [nvarchar](max) NULL,
+	[Billing_city] [nvarchar](max) NULL,
+	[Billing_state] [nvarchar](max) NULL,
+	[Billing_postcode] [nvarchar](max) NULL,
+	[Billing_country] [nvarchar](max) NULL,
+	[Authentication_entityId] [nvarchar](max) NULL,
+	[MerchantAccountId] [nvarchar](max) NULL,
+	[Payload_Id] [nvarchar](max) NULL,
+	[CreationDate] [datetime] NULL,
+ CONSTRAINT [PK_Webhook] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Checkout] ADD  CONSTRAINT [DF_Checkout_CreationDate]  DEFAULT (getdate()) FOR [CreationDate]
+GO
+ALTER TABLE [dbo].[CheckoutPaymentDelivery] ADD  CONSTRAINT [DF_CheckoutPaymentDelivery_CreationDate]  DEFAULT (getdate()) FOR [CreationDate]
+GO
+ALTER TABLE [dbo].[Configuration] ADD  CONSTRAINT [DF_Configuration_CreationDate]  DEFAULT (getdate()) FOR [CreationDate]
+GO
+ALTER TABLE [dbo].[SimpleInvoice] ADD  CONSTRAINT [DF_SimpleInvoice_CreationDate]  DEFAULT (getdate()) FOR [CreationDate]
+GO
+ALTER TABLE [dbo].[SimpleInvoicePaymentDelivery] ADD  CONSTRAINT [DF_SimpleInvoicePaymentDelivery_CreationDate]  DEFAULT (getdate()) FOR [CreationDate]
+GO
+ALTER TABLE [dbo].[System] ADD  CONSTRAINT [DF_System_CreationDate]  DEFAULT (getdate()) FOR [CreationDate]
+GO
+ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF_User_CreationDate_1]  DEFAULT (getdate()) FOR [CreationDate]
+GO
+ALTER TABLE [dbo].[Webhook] ADD  CONSTRAINT [DF_Webhook_CreationDate]  DEFAULT (getdate()) FOR [CreationDate]
+GO
+ALTER TABLE [dbo].[RequestResponseLog]  WITH CHECK ADD  CONSTRAINT [FK_RequestResponseLog_AuthUser] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([Id])
+GO
+ALTER TABLE [dbo].[RequestResponseLog] CHECK CONSTRAINT [FK_RequestResponseLog_AuthUser]
+GO
+ALTER TABLE [dbo].[UserRoute]  WITH CHECK ADD  CONSTRAINT [FK_UserRoute_Route] FOREIGN KEY([RouteId])
+REFERENCES [dbo].[Route] ([Id])
+GO
+ALTER TABLE [dbo].[UserRoute] CHECK CONSTRAINT [FK_UserRoute_Route]
+GO
+ALTER TABLE [dbo].[UserRoute]  WITH CHECK ADD  CONSTRAINT [FK_UserRoute_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([Id])
+GO
+ALTER TABLE [dbo].[UserRoute] CHECK CONSTRAINT [FK_UserRoute_User]
+GO
+/****** Object:  StoredProcedure [dbo].[SP_CheckLoginCreds]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[SP_CheckLoginCreds] -- 'Ntg','tg@123'
+@username nvarchar(50),
+@password nvarchar(50)
+as
+begin
+	select Id , Username , Password , IsActive, SystemId, ISNULL(DailyCheckoutAllowedCount , 0) DailyCheckoutAllowedCount, 
+	ISNULL(DailyCheckoutAllowedAmount , 0) DailyCheckoutAllowedAmount, ISNULL(DailyInvoicesAllowedCount , 0) DailyInvoicesAllowedCount,
+	ISNULL(DailyInvoicesAllowedAmount , 0) DailyInvoicesAllowedAmount, ISNULL(InvoiceExpirationInMinutes, 0) InvoiceExpirationInMinutes
+	from [dbo].[User]
+	where Username = @username and Password = @password
+end
+GO
+/****** Object:  StoredProcedure [dbo].[SP_CheckUserRoute]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create proc [dbo].[SP_CheckUserRoute]
+@prefix nvarchar(80),
+@userId int
+as
+begin
+	select U.Id , U.Username
+	from [dbo].[UserRoute] UR Inner join [dbo].[User] U On UR.UserId = U.Id
+	inner join [dbo].[Route] R on UR.RouteId = R.Id
+	where R.Prefix = @prefix and UR.UserId = @userId
+end
+GO
+/****** Object:  StoredProcedure [dbo].[SP_CreateLogger]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE proc [dbo].[SP_CreateLogger]
+@userHostName nvarchar(200), 
+@userHostAddress nvarchar(50), 
+@origin nvarchar(MAX),
+@requestUri nvarchar(MAX),
+@pathAndQuery nvarchar(MAX),
+@methodType varchar(10),
+@headers nvarchar(MAX), 
+@xForwardedFor nvarchar(MAX), 
+@requestBody nvarchar(MAX), 
+@responseBody nvarchar(MAX),
+@status nvarchar(50), 
+@userId int
+as
+begin
+insert into [dbo].[RequestResponseLog]
+values(@userHostName , @userHostAddress , @origin , @requestUri , @pathAndQuery , @methodType , @headers , @xForwardedFor , @requestBody , @responseBody , @status , GetDate()  , @userId)
+select 'Logged'
+end
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetCheckoutInfo]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-20
+-- Description:	Get Checkout Info
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_GetCheckoutInfo]
+    @CheckoutId nvarchar(MAX)
+
+AS
+BEGIN
+
+	Declare @Amount decimal(16, 2)
+	       ,@Currency nvarchar(50)
+		   ,@PaymentType nvarchar(50)
+		   ,@EntityId nvarchar(200)
+		   ,@MerchantTransactionId bigint
+		   ,@phone nvarchar(50)
+		   ,@lang nvarchar(20)
+		   ,@CustomParameter1 nvarchar(MAX)
+		   ,@CustomParameter2 nvarchar(MAX)
+		   ,@SystemId int
+		   ,@UserId int
+		   ,@OwnerSystemDeliveryStatus int = -1
+		   ,@OwnerSystemPmtNotificationURL nvarchar(MAX)
+		   ,@OwnerSystemPmtNotificationUserName nvarchar(255)
+		   ,@OwnerSystemPmtNotificationPassword nvarchar(MAX)
+		   ,@OwnerChannelDeliveryStatus int = -1
+		   ,@OwnerChannelHookNotificationURL nvarchar(MAX)
+		   ,@OwnerChannelHookNotificationUserName nvarchar(255)
+		   ,@OwnerChannelHookNotificationPassword nvarchar(MAX)
+		   ,@HookNotificationTicketsUrl nvarchar(MAX)
+
+    
+	IF EXISTS(SELECT Id FROM [dbo].[CHECKOUT] WHERE HyperPay_CheckoutId = @CheckoutId)
+	BEGIN
+
+		SELECT @Amount = Amount, @Currency = Currency, @PaymentType = paymentType, @EntityId = EntityId, @MerchantTransactionId = MerchantTransactionId,
+		@phone = phone, @lang = lang, @CustomParameter1 = CustomParameter1, @CustomParameter2 = CustomParameter2, @SystemId = SystemId, @UserId = UserId
+		FROM [dbo].[CHECKOUT]
+		WHERE HyperPay_CheckoutId = @CheckoutId;
+
+
+		SELECT @OwnerSystemPmtNotificationURL = PmtNotificationURL, @OwnerSystemPmtNotificationUserName = PmtNotificationUserName, @OwnerSystemPmtNotificationPassword = PmtNotificationPassword
+		FROM [dbo].[System]
+		WHERE Id = @SystemId;
+
+
+		SELECT @OwnerChannelHookNotificationURL = HookNotificationURL, @OwnerChannelHookNotificationUserName = HookNotificationUserName, 
+		@OwnerChannelHookNotificationPassword = HookNotificationPassword, @HookNotificationTicketsUrl = HookNotificationTicketsUrl
+		FROM [dbo].[User]
+		WHERE Id = @UserId;
+
+
+		SELECT @OwnerSystemDeliveryStatus = OwnerSystem_DeliveryStatus, @OwnerChannelDeliveryStatus = OwnerChannel_DeliveryStatus FROM [dbo].[CheckoutPaymentDelivery]
+		WHERE CheckoutId = @CheckoutId;
+
+
+		SELECT @CheckoutId CheckoutId, @Amount Amount, @Currency Currency, @PaymentType PaymentType, @EntityId EntityId, @MerchantTransactionId MerchantTransactionId,
+			   @phone Phone, @lang Lang,@CustomParameter1 CustomParameter1, @CustomParameter2 CustomParameter2, @SystemId SystemId,  @UserId UserId, 
+			   @OwnerSystemDeliveryStatus OwnerSystemDeliveryStatus, @OwnerSystemPmtNotificationURL OwnerSystemPmtNotificationURL, @OwnerSystemPmtNotificationUserName OwnerSystemPmtNotificationUserName,
+			   @OwnerSystemPmtNotificationPassword OwnerSystemPmtNotificationPassword, @OwnerChannelDeliveryStatus OwnerChannelDeliveryStatus,
+			   @OwnerChannelHookNotificationURL OwnerChannelHookNotificationURL, @OwnerChannelHookNotificationUserName OwnerChannelHookNotificationUserName,
+			   @OwnerChannelHookNotificationPassword OwnerChannelHookNotificationPassword, @HookNotificationTicketsUrl HookNotificationTicketsUrl
+	END
+	ELSE
+	BEGIN
+		-- No data exist for this checkout id
+
+		SET @CheckoutId = '-1';
+
+		SELECT @CheckoutId CheckoutId, @Amount Amount, @Currency Currency, @PaymentType PaymentType, @EntityId EntityId, @MerchantTransactionId MerchantTransactionId,
+			   @phone Phone, @lang Lang,@CustomParameter1 CustomParameter1, @CustomParameter2 CustomParameter2, @SystemId SystemId,  @UserId UserId, 
+			   @OwnerSystemDeliveryStatus OwnerSystemDeliveryStatus, @OwnerSystemPmtNotificationURL OwnerSystemPmtNotificationURL, @OwnerSystemPmtNotificationUserName OwnerSystemPmtNotificationUserName,
+			   @OwnerSystemPmtNotificationPassword OwnerSystemPmtNotificationPassword, @OwnerChannelDeliveryStatus OwnerChannelDeliveryStatus,
+			   @OwnerChannelHookNotificationURL OwnerChannelHookNotificationURL, @OwnerChannelHookNotificationUserName OwnerChannelHookNotificationUserName,
+			   @OwnerChannelHookNotificationPassword OwnerChannelHookNotificationPassword, @HookNotificationTicketsUrl HookNotificationTicketsUrl
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetCheckoutPaymentDelivery]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-20
+-- Description:	Get Checkout payment delivery
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_GetCheckoutPaymentDelivery]
+    @CheckoutId nvarchar(MAX)
+
+AS
+BEGIN
+
+	SELECT OwnerSystem_DeliveryStatus FROM [dbo].[CheckoutPaymentDelivery]
+	WHERE CheckoutId = @CheckoutId;
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetCheckoutStatisticsByUser]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-19
+-- Description:	
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_GetCheckoutStatisticsByUser]
+    @UserId int
+
+AS
+BEGIN
+
+    SELECT  COUNT(id) checkoutCount, COALESCE(SUM(Amount),0) checkoutSUM from [dbo].[CHECKOUT] 
+	WHERE UserId = @UserId
+	And CAST(CreationDate AS Date) = CAST(GETDATE() AS Date);
+
+	-- COALESCE REPLACE NULL value to 0
+
+END
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetInvoiceInfo]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-28
+-- Description:	Get Invoice Info
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_GetInvoiceInfo]
+    @HyperPayMerchantInvoiceNumber bigint
+
+AS
+BEGIN
+
+	Declare @OwnerSystemMerchantInvoiceNumber bigint
+	       ,@Amount decimal(16, 2)
+	       ,@Currency nvarchar(50)
+		   ,@PaymentType nvarchar(50)
+		   ,@phone nvarchar(50)
+		   ,@lang nvarchar(20)
+		   ,@ExpirationDate nvarchar(200)
+		   ,@CustomParameter1 nvarchar(MAX)
+		   ,@CustomParameter2 nvarchar(MAX)
+		   ,@SystemId int
+		   ,@UserId int
+		   ,@OwnerSystemDeliveryStatus int = -1
+		   ,@OwnerSystemPmtNotificationURL nvarchar(MAX)
+		   ,@OwnerSystemPmtNotificationUserName nvarchar(255)
+		   ,@OwnerSystemPmtNotificationPassword nvarchar(MAX)
+		   ,@OwnerChannelDeliveryStatus int = -1
+		   ,@OwnerChannelHookNotificationURL nvarchar(MAX)
+		   ,@OwnerChannelHookNotificationUserName nvarchar(255)
+		   ,@OwnerChannelHookNotificationPassword nvarchar(MAX)
+		   ,@HookNotificationTicketsUrl nvarchar(MAX)
+    
+	IF EXISTS(SELECT Id FROM [dbo].[SimpleInvoice] WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber)
+	BEGIN
+
+		SELECT @OwnerSystemMerchantInvoiceNumber= OwnerSystem_merchant_invoice_number, @Amount = Amount, @Currency = Currency, @PaymentType = payment_type, 
+		@phone = phone, @lang = lang, @ExpirationDate = expiration_date, @CustomParameter1 = CustomParameter1, @CustomParameter2 = CustomParameter2, @SystemId = SystemId, @UserId = UserId
+		FROM [dbo].[SimpleInvoice]
+		WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+
+		SELECT @OwnerSystemPmtNotificationURL = PmtNotificationURL, @OwnerSystemPmtNotificationUserName = PmtNotificationUserName, @OwnerSystemPmtNotificationPassword = PmtNotificationPassword
+		FROM [dbo].[System]
+		WHERE Id = @SystemId;
+
+		SELECT @OwnerChannelHookNotificationURL = HookNotificationURL, @OwnerChannelHookNotificationUserName = HookNotificationUserName, 
+			   @OwnerChannelHookNotificationPassword = HookNotificationPassword, @HookNotificationTicketsUrl = HookNotificationTicketsUrl
+		FROM [dbo].[User]
+		WHERE Id = @UserId;
+
+		SELECT @OwnerSystemDeliveryStatus = OwnerSystem_DeliveryStatus, @OwnerChannelDeliveryStatus = OwnerChannel_DeliveryStatus FROM [dbo].[SimpleInvoicePaymentDelivery]
+		WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+		SELECT @HyperPayMerchantInvoiceNumber HyperPayMerchantInvoiceNumber, @OwnerSystemMerchantInvoiceNumber OwnerSystemMerchantInvoiceNumber, @Amount Amount, 
+		       @Currency Currency, @PaymentType PaymentType,@phone Phone, @lang Lang, @ExpirationDate ExpirationDate, @CustomParameter1 CustomParameter1, @CustomParameter2 CustomParameter2, @SystemId SystemId,  @UserId UserId,
+			   @OwnerSystemDeliveryStatus OwnerSystemDeliveryStatus, @OwnerSystemPmtNotificationURL OwnerSystemPmtNotificationURL, @OwnerSystemPmtNotificationUserName OwnerSystemPmtNotificationUserName,
+			   @OwnerSystemPmtNotificationPassword OwnerSystemPmtNotificationPassword, @OwnerChannelDeliveryStatus OwnerChannelDeliveryStatus,
+			   @OwnerChannelHookNotificationURL OwnerChannelHookNotificationURL, @OwnerChannelHookNotificationUserName OwnerChannelHookNotificationUserName,
+			   @OwnerChannelHookNotificationPassword OwnerChannelHookNotificationPassword, @HookNotificationTicketsUrl HookNotificationTicketsUrl
+	END
+	ELSE
+	BEGIN
+		-- No data exist for this invoice number
+
+		SET @HyperPayMerchantInvoiceNumber = '-1';
+
+		SELECT @HyperPayMerchantInvoiceNumber HyperPayMerchantInvoiceNumber, @OwnerSystemMerchantInvoiceNumber OwnerSystemMerchantInvoiceNumber, @Amount Amount, 
+		       @Currency Currency, @PaymentType PaymentType,@phone Phone, @lang Lang, @ExpirationDate ExpirationDate, @CustomParameter1 CustomParameter1, @CustomParameter2 CustomParameter2, @SystemId SystemId, @UserId UserId,
+			   @OwnerSystemDeliveryStatus OwnerSystemDeliveryStatus, @OwnerSystemPmtNotificationURL OwnerSystemPmtNotificationURL, @OwnerSystemPmtNotificationUserName OwnerSystemPmtNotificationUserName,
+			   @OwnerSystemPmtNotificationPassword OwnerSystemPmtNotificationPassword, @OwnerChannelDeliveryStatus OwnerChannelDeliveryStatus,
+			   @OwnerChannelHookNotificationURL OwnerChannelHookNotificationURL, @OwnerChannelHookNotificationUserName OwnerChannelHookNotificationUserName,
+			   @OwnerChannelHookNotificationPassword OwnerChannelHookNotificationPassword, @HookNotificationTicketsUrl HookNotificationTicketsUrl
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetInvoicePaymentDelivery]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-28
+-- Description:	Get Invoice payment delivery
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_GetInvoicePaymentDelivery]
+    @HyperPayMerchantInvoiceNumber bigint
+
+AS
+BEGIN
+
+	SELECT OwnerSystem_DeliveryStatus FROM [dbo].[SimpleInvoicePaymentDelivery]
+	WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetInvoiceStatisticsByUser]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-28
+-- Description:	
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_GetInvoiceStatisticsByUser]
+    @UserId int
+
+AS
+BEGIN
+
+    SELECT  COUNT(id) invoiceCount, COALESCE(SUM(Amount),0) invoiceSUM from [dbo].[SimpleInvoice] 
+	WHERE UserId = @UserId
+	And CAST(CreationDate AS Date) = CAST(GETDATE() AS Date);
+
+	-- COALESCE REPLACE NULL value to 0
+
+END
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetNextHyperPayInvoiceNumber]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-28
+-- Description:	Get Next HyperPay Invoice Number
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_GetNextHyperPayInvoiceNumber]
+AS
+BEGIN
+	SELECT NEXT VALUE FOR dbo.HyperPay_InvoiceNumber_Sequence InvoiceNumber;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetPaymentMethodByCheckoutId]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-10-06
+-- Description:	Get Payment Method By Checkout Id
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_GetPaymentMethodByCheckoutId]
+    @CheckoutId nvarchar(MAX)
+
+AS
+BEGIN
+    
+	SELECT PaymentMethod FROM [dbo].[CHECKOUT]
+	WHERE HyperPay_CheckoutId = @CheckoutId;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_InsertCheckout]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-19
+-- Description:	Insert checkout record
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_InsertCheckout]
+	@MerchantTransactionId bigint,
+	@Amount decimal(16, 2),
+	@Currency nvarchar(50),
+	@paymentType nvarchar(50),
+	@PaymentMethod nvarchar(50),
+	@EntityId nvarchar(200),
+	@CustomerEmail nvarchar(200),
+	@CustomerGivenName nvarchar(200),
+	@CustomerSurname nvarchar(200),
+	@BillingPostcode nvarchar(50),
+	@BillingStreet nvarchar(MAX),
+	@BillingCity nvarchar(200),
+	@BillingState nvarchar(200),
+	@BillingCountry nvarchar(200),
+	@Phone nvarchar(50),
+	@Lang nvarchar(20),
+	@CustomParameter1 nvarchar(MAX),
+	@CustomParameter2 nvarchar(MAX),
+	@UserId int,
+	@SystemId int
+AS
+BEGIN
+
+    INSERT INTO [dbo].[CHECKOUT] (MerchantTransactionId, Amount, Currency, paymentType, PaymentMethod, EntityId, CustomerEmail, CustomerGivenName,
+	                              CustomerSurname, BillingPostcode, BillingStreet, BillingCity, BillingState, BillingCountry, phone, lang, CustomParameter1, CustomParameter2, UserId, SystemId)
+
+    VALUES (@MerchantTransactionId , @Amount, @Currency, @paymentType, @PaymentMethod, @EntityId, @CustomerEmail, @CustomerGivenName,
+	        @CustomerSurname, @BillingPostcode, @BillingStreet, @BillingCity, @BillingState, @BillingCountry, @Phone, @Lang, @CustomParameter1, @CustomParameter2, @UserId, @SystemId)
+
+    
+	SELECT SCOPE_IDENTITY();
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_InsertCheckoutPaymentDelivery]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-21
+-- Description:	Insert checkout Payment Delivery
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_InsertCheckoutPaymentDelivery]
+	@CheckoutId nvarchar(MAX)
+AS
+BEGIN
+	
+	Declare @PmtDeliveryStatusId int = 1;    --New
+
+	IF EXISTS(SELECT Id FROM [dbo].[CheckoutPaymentDelivery] WHERE CheckoutId = @CheckoutId)
+	BEGIN
+
+		SELECT 'record_already_exist';
+
+	END
+	ELSE
+	BEGIN
+		-- No data exist for this checkout id
+
+	    BEGIN TRY
+
+			INSERT INTO [dbo].[CheckoutPaymentDelivery] (CheckoutId, OwnerSystem_DeliveryStatus, OwnerChannel_DeliveryStatus)
+			VALUES (@CheckoutId , @PmtDeliveryStatusId, @PmtDeliveryStatusId);
+
+			SELECT 'success';
+		END TRY
+		BEGIN CATCH
+			
+			IF EXISTS(SELECT Id FROM [dbo].[CheckoutPaymentDelivery] WHERE CheckoutId = @CheckoutId)
+			BEGIN
+				
+				SELECT 'record_already_exist'
+			END
+			ELSE
+			BEGIN
+				SELECT 'error';
+			END
+		END CATCH;  
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_InsertInvoicePaymentDelivery]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-28
+-- Description:	Insert Invoice Payment Delivery
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_InsertInvoicePaymentDelivery]
+	@HyperPayMerchantInvoiceNumber bigint
+AS
+BEGIN
+	
+	Declare @PmtDeliveryStatusId int = 1;    --New
+
+	IF EXISTS(SELECT Id FROM [dbo].[SimpleInvoicePaymentDelivery] WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber)
+	BEGIN
+
+		SELECT 'record_already_exist';
+
+	END
+	ELSE
+	BEGIN
+		-- No data exist for this Invoice number
+
+	    BEGIN TRY
+
+			INSERT INTO [dbo].[SimpleInvoicePaymentDelivery] (HyperPay_merchant_invoice_number, OwnerSystem_DeliveryStatus, OwnerChannel_DeliveryStatus)
+			VALUES (@HyperPayMerchantInvoiceNumber , @PmtDeliveryStatusId, @PmtDeliveryStatusId);
+
+			SELECT 'success';
+		END TRY
+		BEGIN CATCH
+			
+			IF EXISTS(SELECT Id FROM [dbo].[SimpleInvoicePaymentDelivery] WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber)
+			BEGIN
+				
+				SELECT 'record_already_exist'
+			END
+			ELSE
+			BEGIN
+				SELECT 'error';
+			END
+		END CATCH;  
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_InsertSimpleInvoice]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-28
+-- Description:	Insert Simple Invoice
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_InsertSimpleInvoice]
+	@HyperPayMerchantInvoiceNumber bigint,
+	@OwnerSystemMerchantInvoiceNumber bigint,
+	@amount decimal(16, 2),
+	@currency nvarchar(20),
+	@payment_type nvarchar(20),
+	@name nvarchar(200),
+	@email nvarchar(200),
+	@phone nvarchar(50),
+	@lang nvarchar(20),
+	@ExpirationDate nvarchar(100),
+	@CustomParameter1 nvarchar(Max),
+	@CustomParameter2 nvarchar(Max),
+	@RequestToHyperPay nvarchar(MAX),
+	@UserId int,
+	@SystemId int
+
+AS
+BEGIN
+
+    INSERT INTO [dbo].[SimpleInvoice] (HyperPay_merchant_invoice_number, OwnerSystem_merchant_invoice_number, amount, currency, payment_type,[name],
+	                              email, phone, lang, expiration_date, CustomParameter1, CustomParameter2, RequestToHyperPay, UserId, SystemId)
+
+    VALUES (@HyperPayMerchantInvoiceNumber , @OwnerSystemMerchantInvoiceNumber, @amount, @currency, @payment_type, @name, @email, @phone,
+	        @lang, @ExpirationDate, @CustomParameter1, @CustomParameter2, @RequestToHyperPay, @UserId, @SystemId)
+
+    
+	SELECT SCOPE_IDENTITY();
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_InsertWebhook]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-20
+-- Description:	Insert Webhook record
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_InsertWebhook]
+	@RawData nvarchar(MAX),
+	@ndc nvarchar(MAX),
+	@MerchantTransactionId nvarchar(MAX),
+	@MerchantInvoiceId nvarchar(MAX),
+	@merchant_invoice_number nvarchar(MAX),
+	@Type nvarchar(MAX),
+	@PaymentType nvarchar(MAX),
+	@PaymentBrand nvarchar(MAX),
+	@Amount nvarchar(MAX),
+	@Currency nvarchar(MAX),
+	@Result_Code nvarchar(MAX),
+	@Result_Description nvarchar(MAX),
+	@Card_bin nvarchar(MAX),
+	@Card_last4Digits nvarchar(MAX),
+	@Card_holder nvarchar(MAX),
+	@Card_expiryMonth nvarchar(MAX),
+	@Card_expiryYear nvarchar(MAX),
+	@Customer_givenName nvarchar(MAX),
+	@Customer_surname nvarchar(MAX),
+	@Customer_email nvarchar(MAX),
+	@Customer_ip nvarchar(MAX),
+	@Billing_street1 nvarchar(MAX),
+	@Billing_city nvarchar(MAX),
+	@Billing_state nvarchar(MAX),
+	@Billing_postcode nvarchar(MAX),
+	@Billing_country nvarchar(MAX),
+	@Authentication_entityId nvarchar(MAX),
+	@MerchantAccountId nvarchar(MAX),
+	@Payload_Id nvarchar(MAX)
+
+AS
+BEGIN
+
+    INSERT INTO [dbo].[Webhook] (RawData, ndc, MerchantTransactionId, MerchantInvoiceId, merchant_invoice_number, [Type], PaymentType, 
+	                              PaymentBrand, Amount, Currency, Result_Code, Result_Description, Card_bin, Card_last4Digits, Card_holder,
+								  Card_expiryMonth, Card_expiryYear, Customer_givenName, Customer_surname, Customer_email, Customer_ip, 
+								  Billing_street1, Billing_city, Billing_state, Billing_postcode, Billing_country, Authentication_entityId,
+								  MerchantAccountId, Payload_Id)
+
+    VALUES (@RawData, @ndc, @MerchantTransactionId, NULLIF(@MerchantInvoiceId, ''), NULLIF(@merchant_invoice_number, ''), @Type, @PaymentType, @PaymentBrand, @Amount,
+	                              @Currency, @Result_Code, @Result_Description, @Card_bin, @Card_last4Digits, @Card_holder, @Card_expiryMonth, 
+								  @Card_expiryYear, @Customer_givenName, @Customer_surname, @Customer_email, @Customer_ip, @Billing_street1,
+								  @Billing_city, @Billing_state, @Billing_postcode, @Billing_country, @Authentication_entityId, @MerchantAccountId, 
+								  @Payload_Id)
+
+    
+	SELECT SCOPE_IDENTITY();
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_IsInvoiceExist]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-28
+-- Description:	Check if invoice exists
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_IsInvoiceExist]
+    @InvoiceNumber bigint,
+	@SystemId int
+
+AS
+BEGIN
+
+	IF EXISTS(SELECT Id FROM [dbo].[SimpleInvoice] WHERE OwnerSystem_merchant_invoice_number = @InvoiceNumber and SystemId = @SystemId)
+	BEGIN
+		SELECT 'true' Exist;
+	END
+	ELSE
+	BEGIN
+		-- No data exist for this invoice
+
+		SELECT 'false' Exist;
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_UpdateCheckout]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-19
+-- Description:	Update checkout record by the result which received from HyperPay
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_UpdateCheckout]
+    @Id bigint,
+	@HyperPayRawResponse nvarchar(MAX),
+	@ResultCode nvarchar(MAX),
+	@ResultDescription nvarchar(MAX),
+	@ndc nvarchar(MAX),
+	@CheckoutId nvarchar(MAX),
+	@TimeStamp nvarchar(200)
+
+AS
+BEGIN
+
+    UPDATE [dbo].[CHECKOUT] 
+	SET HyperPayRawResponse = @HyperPayRawResponse,
+	HyperPay_ResultCode = @ResultCode,
+	HyperPay_ResultDescription = @ResultDescription,
+	HyperPay_ndc = @ndc,
+	HyperPay_CheckoutId = @CheckoutId,
+	HyperPay_TimeStamp = @TimeStamp,
+	UpdatedDate = GETDATE()
+    WHERE Id = @Id
+
+	SELECT 'success';
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_UpdateCheckoutPaymentDeliveryToChannel]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-21
+-- Description:	Update checkout Payment Delivery to its channel by a status
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_UpdateCheckoutPaymentDeliveryToChannel]
+    @CheckoutId nvarchar(MAX),
+	@PmtDeliveryStatusId int,
+	@OwnerChannelRequest NVARCHAR(MAX),
+	@OwnerChannelResponse NVARCHAR(MAX)
+
+AS
+BEGIN
+
+	Declare @UnderProcessing int = 2,
+			@Delivered int = 3, 
+			@Failed int = 4,
+			@FailedAndStopped int = 5,
+			@RetryCountToDeliverPayment int,
+			@MaxRetryCount int;
+
+
+	SELECT @RetryCountToDeliverPayment = OwnerChannel_RetryCount
+	FROM [dbo].[CheckoutPaymentDelivery] WHERE CheckoutId = @CheckoutId;
+
+
+	IF(@PmtDeliveryStatusId = @UnderProcessing)
+	BEGIN
+
+		UPDATE [dbo].[CheckoutPaymentDelivery]
+		SET OwnerChannel_DeliveryStatus = @PmtDeliveryStatusId,
+		OwnerChannel_Request = @OwnerChannelRequest
+		WHERE CheckoutId = @CheckoutId;
+
+		SELECT 'success';
+	END
+	ELSE IF(@PmtDeliveryStatusId = @Delivered)
+	BEGIN
+
+		UPDATE [dbo].[CheckoutPaymentDelivery]
+		SET OwnerChannel_DeliveryStatus = @PmtDeliveryStatusId,
+		OwnerChannel_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+		OwnerChannel_LastRetryAt = GETDATE(),
+		OwnerChannel_DeliveredAt = GETDATE(),
+		OwnerChannel_Request = @OwnerChannelRequest,
+		OwnerChannel_Response = @OwnerChannelResponse
+		WHERE CheckoutId = @CheckoutId;
+
+		SELECT 'success';
+	END
+	ELSE IF(@PmtDeliveryStatusId = @Failed)
+	BEGIN
+
+		SELECT @MaxRetryCount = [VALUE] FROM Configuration WHERE CODE = 'PmtDeliveryRetryCount';
+
+		IF(ISNULL(@RetryCountToDeliverPayment,0) < @MaxRetryCount)
+		BEGIN
+
+			UPDATE [dbo].[CheckoutPaymentDelivery]
+			SET OwnerChannel_DeliveryStatus = @PmtDeliveryStatusId,
+			OwnerChannel_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+			OwnerChannel_LastRetryAt = GETDATE(),
+			OwnerChannel_Request = @OwnerChannelRequest,
+			OwnerChannel_Response = @OwnerChannelResponse
+			WHERE CheckoutId = @CheckoutId;
+
+			SELECT 'success';
+
+		END 
+		ELSE
+		BEGIN
+
+			UPDATE [dbo].[CheckoutPaymentDelivery]
+			SET OwnerChannel_DeliveryStatus = @FailedAndStopped,
+			OwnerChannel_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+			OwnerChannel_LastRetryAt = GETDATE(),
+			OwnerChannel_Request = @OwnerChannelRequest,
+			OwnerChannel_Response = @OwnerChannelResponse
+			WHERE CheckoutId = @CheckoutId;
+
+			SELECT 'success';
+
+		END
+
+
+	END
+	ELSE IF(@PmtDeliveryStatusId = @FailedAndStopped)
+	BEGIN
+
+		UPDATE [dbo].[CheckoutPaymentDelivery]
+		SET OwnerChannel_DeliveryStatus = @PmtDeliveryStatusId,
+		OwnerChannel_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+		OwnerChannel_LastRetryAt = GETDATE(),
+		OwnerChannel_DeliveredAt = GETDATE(),
+		OwnerChannel_Request = @OwnerChannelRequest,
+		OwnerChannel_Response = @OwnerChannelResponse
+		WHERE CheckoutId = @CheckoutId;
+
+		SELECT 'success';
+	END
+	ELSE
+	BEGIN
+		SELECT 'PmtDeliveryStatusId is not allowed!';
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_UpdateCheckoutPaymentDeliveryToSystem]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-28
+-- Description:	Update Checkout Payment Delivery to its system by a status
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_UpdateCheckoutPaymentDeliveryToSystem]
+    @CheckoutId nvarchar(MAX),
+	@PmtDeliveryStatusId int,
+	@OwnerSystemRequest NVARCHAR(MAX),
+	@OwnerSystemResponse NVARCHAR(MAX)
+
+AS
+BEGIN
+
+	Declare @UnderProcessing int = 2,
+			@Delivered int = 3, 
+			@Failed int = 4,
+			@FailedAndStopped int = 5,
+			@RetryCountToDeliverPayment int,
+			@MaxRetryCount int;
+
+
+	SELECT @RetryCountToDeliverPayment = OwnerSystem_RetryCount
+	FROM [dbo].[CheckoutPaymentDelivery] WHERE CheckoutId = @CheckoutId;
+
+	IF(@PmtDeliveryStatusId = @UnderProcessing)
+	BEGIN
+
+		UPDATE [dbo].[CheckoutPaymentDelivery]
+		SET OwnerSystem_DeliveryStatus = @PmtDeliveryStatusId,
+		OwnerSystem_Request = @OwnerSystemRequest
+		WHERE CheckoutId = @CheckoutId;
+
+		SELECT 'success';
+	END
+	ELSE IF(@PmtDeliveryStatusId = @Delivered)
+	BEGIN
+
+		UPDATE [dbo].[CheckoutPaymentDelivery]
+		SET OwnerSystem_DeliveryStatus = @PmtDeliveryStatusId,
+		OwnerSystem_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+		OwnerSystem_LastRetryAt = GETDATE(),
+		OwnerSystem_DeliveredAt = GETDATE(),
+		OwnerSystem_Request = @OwnerSystemRequest,
+		OwnerSystem_Response = @OwnerSystemResponse
+		WHERE CheckoutId = @CheckoutId;
+
+		SELECT 'success';
+	END
+	ELSE IF(@PmtDeliveryStatusId = @Failed)
+	BEGIN
+		
+		SELECT @MaxRetryCount = [VALUE] FROM Configuration WHERE CODE = 'PmtDeliveryRetryCount';
+
+		IF(ISNULL(@RetryCountToDeliverPayment,0) < @MaxRetryCount)
+		BEGIN
+
+			UPDATE [dbo].[CheckoutPaymentDelivery]
+			SET OwnerSystem_DeliveryStatus = @PmtDeliveryStatusId,
+			OwnerSystem_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+			OwnerSystem_LastRetryAt = GETDATE(),
+			OwnerSystem_Request = @OwnerSystemRequest,
+			OwnerSystem_Response = @OwnerSystemResponse
+			WHERE CheckoutId = @CheckoutId;
+
+			SELECT 'success';
+
+		END 
+		ELSE
+		BEGIN
+
+			UPDATE [dbo].[CheckoutPaymentDelivery]
+			SET OwnerSystem_DeliveryStatus = @FailedAndStopped,
+			OwnerSystem_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+			OwnerSystem_LastRetryAt = GETDATE(),
+			OwnerSystem_Request = @OwnerSystemRequest,
+			OwnerSystem_Response = @OwnerSystemResponse
+			WHERE CheckoutId = @CheckoutId;
+
+			SELECT 'success';
+
+		END
+
+	END
+	ELSE IF(@PmtDeliveryStatusId = @FailedAndStopped)
+	BEGIN
+
+		UPDATE [dbo].[CheckoutPaymentDelivery]
+		SET OwnerSystem_DeliveryStatus = @PmtDeliveryStatusId,
+		OwnerSystem_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+		OwnerSystem_LastRetryAt = GETDATE(),
+		OwnerSystem_DeliveredAt = GETDATE(),
+		OwnerSystem_Request = @OwnerSystemRequest,
+		OwnerSystem_Response = @OwnerSystemResponse
+		WHERE CheckoutId = @CheckoutId;
+
+		SELECT 'success';
+	END
+	ELSE
+	BEGIN
+		SELECT 'PmtDeliveryStatusId is not allowed!';
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_UpdateInvoice]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-10-05
+-- Description:	Update invoice record by the result which received from HyperPay
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_UpdateInvoice]
+    @Id bigint,
+	@ResponseFromHyperPay NVARCHAR(MAX)
+
+AS
+BEGIN
+
+    UPDATE [dbo].[SimpleInvoice] 
+	SET ResponseFromHyperPay = @ResponseFromHyperPay,
+	UpdatedDate = GETDATE()
+    WHERE Id = @Id
+
+	SELECT 'success';
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_UpdateInvoicePaymentDeliveryToChannel]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-28
+-- Description:	Update Invoice Payment Delivery to its channel by a status
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_UpdateInvoicePaymentDeliveryToChannel]
+    @HyperPayMerchantInvoiceNumber bigint,
+	@PmtDeliveryStatusId int,
+	@OwnerChannelRequest NVARCHAR(MAX),
+	@OwnerChannelResponse NVARCHAR(MAX)
+
+AS
+BEGIN
+
+	Declare @UnderProcessing int = 2,
+			@Delivered int = 3, 
+			@Failed int = 4,
+			@FailedAndStopped int = 5,
+			@RetryCountToDeliverPayment int,
+			@MaxRetryCount int;
+
+
+	SELECT @RetryCountToDeliverPayment = OwnerChannel_RetryCount
+	FROM [dbo].[SimpleInvoicePaymentDelivery] WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+	IF(@PmtDeliveryStatusId = @UnderProcessing)
+	BEGIN
+
+		UPDATE [dbo].[SimpleInvoicePaymentDelivery]
+		SET OwnerChannel_DeliveryStatus = @PmtDeliveryStatusId,
+		OwnerChannel_Request = @OwnerChannelRequest
+		WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+		SELECT 'success';
+	END
+	ELSE IF(@PmtDeliveryStatusId = @Delivered)
+	BEGIN
+
+		UPDATE [dbo].[SimpleInvoicePaymentDelivery]
+		SET OwnerChannel_DeliveryStatus = @PmtDeliveryStatusId,
+		OwnerChannel_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+		OwnerChannel_LastRetryAt = GETDATE(),
+		OwnerChannel_DeliveredAt = GETDATE(),
+		OwnerChannel_Request = @OwnerChannelRequest,
+		OwnerChannel_Response = @OwnerChannelResponse
+		WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+		SELECT 'success';
+	END
+	ELSE IF(@PmtDeliveryStatusId = @Failed)
+	BEGIN
+
+		SELECT @MaxRetryCount = [VALUE] FROM Configuration WHERE CODE = 'PmtDeliveryRetryCount';
+
+		IF(ISNULL(@RetryCountToDeliverPayment,0) < @MaxRetryCount)
+		BEGIN
+
+			UPDATE [dbo].[SimpleInvoicePaymentDelivery]
+			SET OwnerChannel_DeliveryStatus = @PmtDeliveryStatusId,
+			OwnerChannel_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+			OwnerChannel_LastRetryAt = GETDATE(),
+			OwnerChannel_Request = @OwnerChannelRequest,
+			OwnerChannel_Response = @OwnerChannelResponse
+			WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+			SELECT 'success';
+
+		END 
+		ELSE
+		BEGIN
+
+			UPDATE [dbo].[SimpleInvoicePaymentDelivery]
+			SET OwnerChannel_DeliveryStatus = @FailedAndStopped,
+			OwnerChannel_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+			OwnerChannel_LastRetryAt = GETDATE(),
+			OwnerChannel_Request = @OwnerChannelRequest,
+			OwnerChannel_Response = @OwnerChannelResponse
+			WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+			SELECT 'success';
+
+		END
+
+
+	END
+	ELSE IF(@PmtDeliveryStatusId = @FailedAndStopped)
+	BEGIN
+
+		UPDATE [dbo].[SimpleInvoicePaymentDelivery]
+		SET OwnerChannel_DeliveryStatus = @PmtDeliveryStatusId,
+		OwnerChannel_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+		OwnerChannel_LastRetryAt = GETDATE(),
+		OwnerChannel_DeliveredAt = GETDATE(),
+		OwnerChannel_Request = @OwnerChannelRequest,
+		OwnerChannel_Response = @OwnerChannelResponse
+		WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+		SELECT 'success';
+	END
+	ELSE
+	BEGIN
+		SELECT 'PmtDeliveryStatusId is not allowed!';
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_UpdateInvoicePaymentDeliveryToSystem]    Script Date: 11/4/2021 9:20:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Mohamed Eldib
+-- Create date: 2021-09-28
+-- Description:	Update Invoice Payment Delivery to its system by a status
+-- =============================================
+CREATE PROCEDURE [dbo].[SP_UpdateInvoicePaymentDeliveryToSystem]
+    @HyperPayMerchantInvoiceNumber bigint,
+	@PmtDeliveryStatusId int,
+	@OwnerSystemRequest NVARCHAR(MAX),
+	@OwnerSystemResponse NVARCHAR(MAX)
+
+AS
+BEGIN
+
+	Declare @UnderProcessing int = 2,
+			@Delivered int = 3, 
+			@Failed int = 4,
+			@FailedAndStopped int = 5,
+			@RetryCountToDeliverPayment int,
+			@MaxRetryCount int;
+
+
+	SELECT @RetryCountToDeliverPayment = OwnerSystem_RetryCount
+	FROM [dbo].[SimpleInvoicePaymentDelivery] WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+	IF(@PmtDeliveryStatusId = @UnderProcessing)
+	BEGIN
+
+		UPDATE [dbo].[SimpleInvoicePaymentDelivery]
+		SET OwnerSystem_DeliveryStatus = @PmtDeliveryStatusId,
+		OwnerSystem_Request = @OwnerSystemRequest
+		WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+		SELECT 'success';
+	END
+	ELSE IF(@PmtDeliveryStatusId = @Delivered)
+	BEGIN
+
+		UPDATE [dbo].[SimpleInvoicePaymentDelivery]
+		SET OwnerSystem_DeliveryStatus = @PmtDeliveryStatusId,
+		OwnerSystem_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+		OwnerSystem_LastRetryAt = GETDATE(),
+		OwnerSystem_DeliveredAt = GETDATE(),
+		OwnerSystem_Request = @OwnerSystemRequest,
+		OwnerSystem_Response = @OwnerSystemResponse
+		WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+		SELECT 'success';
+	END
+	ELSE IF(@PmtDeliveryStatusId = @Failed)
+	BEGIN
+		
+		SELECT @MaxRetryCount = [VALUE] FROM Configuration WHERE CODE = 'PmtDeliveryRetryCount';
+
+		IF(ISNULL(@RetryCountToDeliverPayment,0) < @MaxRetryCount)
+		BEGIN
+
+			UPDATE [dbo].[SimpleInvoicePaymentDelivery]
+			SET OwnerSystem_DeliveryStatus = @PmtDeliveryStatusId,
+			OwnerSystem_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+			OwnerSystem_LastRetryAt = GETDATE(),
+			OwnerSystem_Request = @OwnerSystemRequest,
+			OwnerSystem_Response = @OwnerSystemResponse
+			WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+			SELECT 'success';
+
+		END 
+		ELSE
+		BEGIN
+
+			UPDATE [dbo].[SimpleInvoicePaymentDelivery]
+			SET OwnerSystem_DeliveryStatus = @FailedAndStopped,
+			OwnerSystem_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+			OwnerSystem_LastRetryAt = GETDATE(),
+			OwnerSystem_Request = @OwnerSystemRequest,
+			OwnerSystem_Response = @OwnerSystemResponse
+			WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+			SELECT 'success';
+
+		END
+
+	END
+	ELSE IF(@PmtDeliveryStatusId = @FailedAndStopped)
+	BEGIN
+
+		UPDATE [dbo].[SimpleInvoicePaymentDelivery]
+		SET OwnerSystem_DeliveryStatus = @PmtDeliveryStatusId,
+		OwnerSystem_RetryCount = ISNULL(@RetryCountToDeliverPayment,0) + 1,
+		OwnerSystem_LastRetryAt = GETDATE(),
+		OwnerSystem_DeliveredAt = GETDATE(),
+		OwnerSystem_Request = @OwnerSystemRequest,
+		OwnerSystem_Response = @OwnerSystemResponse
+		WHERE HyperPay_merchant_invoice_number = @HyperPayMerchantInvoiceNumber;
+
+		SELECT 'success';
+	END
+	ELSE
+	BEGIN
+		SELECT 'PmtDeliveryStatusId is not allowed!';
+	END
+END
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'This table contains the payment delivery status for all paid checkouts.' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'CheckoutPaymentDelivery', @level2type=N'COLUMN',@level2name=N'Id'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Backend web service URL on the owner system side. SAPTCO payment gateway deliver the payment notification to the owner system on this URL.' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'System', @level2type=N'COLUMN',@level2name=N'PmtNotificationURL'
+GO

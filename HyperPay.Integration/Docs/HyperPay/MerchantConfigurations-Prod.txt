@@ -1,0 +1,73 @@
+Kindly find the credentials for the LIVE server below:
+
+Links used in the integration in the code:  https://oppwa.com/
+
+Access Token : OGFjOWE0Y2U3YzU1N2ZkYTAxN2M3MDNjYzc2MTc4ZGJ8aEVXV2d5QWN0OA==
+
+Entity Id: 8ac9a4ce7c557fda017c703e27ce78e6 
+PaymentType: DB
+Currency : SAR
+Payment Methods: VISA, MASTER
+
+Entity Id: 8ac9a4ce7c557fda017c703ebf2378f1 
+PaymentType: DB
+Currency : SAR
+Payment Methods: MADA
+
+================================================================================
+
+Merchant Area:
+(Here where you can check your Live transactions)
+Link: : https://gate2play.ctpe.info/7401%20-%20Saptco/
+User: mubarakaa@saptco.com.sa (Small Letters)
+Password: will be sent automatically to:mubarakaa@saptco.com.sa(check your junk/spam folder)
+
+================================================================================
+
+- Testing Cards: There are no Testing cards.
+(Please note that any test transactions success or failed processed in the Live environment are subject to charge).
+
+================================================================================
+
+Also you will need to change the links as below:
+
+From: https://test.oppwa.com/v1/checkouts
+To: https://oppwa.com/v1/checkouts
+
+Also please dont forget to remove testMode=EXTERNAL from the this step code as this is only required for the test.
+And  you need to add the following parameters in the POST request (step number.1 in the guide), otherwise all transactions will be rejected
+- merchantTransactionId="your unique ID in your database"
+- customer.email = The user's email.
+- billing.street1= street address of customer          
+- billing.city= should be city of customer          
+- billing.state= should be state of customer          
+- billing.country= should be country of customer (Alpha-2 codes with Format A2[A-Z]{2})
+- billing.postcode
+- customer.givenName
+- customer.surname
+
+================================================================================
+
+02  Web Wedgit:
+
+from : <script src="https://test.oppwa.com/v1/paymentWidgets.js?checkoutId={checkoutId}"></script>
+to: <script src="https://oppwa.com/v1/paymentWidgets.js?checkoutId={checkoutId}"></script>
+
+================================================================================
+
+Mobile Side, 
+
+change the provider mode to LIVE
+
+================================================================================
+
+03 For get the payment status:
+
+
+From: https://test.oppwa.com/v1/checkouts/{id}/payment
+To: https://oppwa.com/v1/checkouts/{id}/payment
+
+================================================================================
+
+
+

@@ -1,0 +1,16 @@
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\bin\Release\netstandard2.0\HyperPay.Entities.deps.json
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\bin\Release\netstandard2.0\HyperPay.Entities.dll
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\bin\Release\netstandard2.0\HyperPay.Entities.pdb
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\bin\Release\netstandard2.0\System.ComponentModel.DataAnnotations.dll
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\bin\Release\netstandard2.0\System.Configuration.dll
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\bin\Release\netstandard2.0\System.Security.dll
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\bin\Release\netstandard2.0\System.ComponentModel.DataAnnotations.xml
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\bin\Release\netstandard2.0\System.Configuration.xml
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\bin\Release\netstandard2.0\System.Security.xml
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\obj\Release\netstandard2.0\HyperPay.Entities.csprojAssemblyReference.cache
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\obj\Release\netstandard2.0\HyperPay.Entities.csproj.CoreCompileInputs.cache
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\obj\Release\netstandard2.0\HyperPay.Entities.AssemblyInfoInputs.cache
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\obj\Release\netstandard2.0\HyperPay.Entities.AssemblyInfo.cs
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\obj\Release\netstandard2.0\HyperPay.Entities.csproj.CopyComplete
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\obj\Release\netstandard2.0\HyperPay.Entities.dll
+E:\M2ri\HyperPay\HyperPay.Integration\HyperPay.Entities\obj\Release\netstandard2.0\HyperPay.Entities.pdb
